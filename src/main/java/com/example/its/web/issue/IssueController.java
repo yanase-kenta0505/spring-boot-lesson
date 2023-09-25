@@ -6,9 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.its.domain.issue.IssueEntity;
 import com.example.its.domain.issue.IssueService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,5 +42,12 @@ public class IssueController {
 
     issueService.create(form.getSummary(), form.getDescription());
     return "redirect:/issues";
+  }
+
+  @GetMapping("/{issueId}")
+  public String showDetail(@PathVariable("issueId") long issueId, Model model) {
+    var dummyEntity = new IssueEntity(1, "概要", "説明");
+    model.addAttribute("issue", dummyEntity);
+    return "issues/detail";
   }
 }
